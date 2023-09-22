@@ -1,0 +1,17 @@
+{
+  "name": "saleor-dashboard",
+  "version": "3.16.0-dev",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "release": "echo $npm_package_version | xargs git tag && git push --follow-tags",
+    "change:add": "changeset add",
+    "release:cleanup": "./script.sh"
+  },
+  "keywords": [],
+  "author": "Krzysztof Żuraw (https://krzysztofzuraw.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "@changesets/cli": "^2.26.2"
+  }
+}

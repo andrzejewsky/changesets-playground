@@ -1,0 +1,56 @@
+name: Open release
+
+on:
+  push:
+    branches:
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  prepare:
+    name: Prepare release with Changesets
+    runs-on: ubuntu-22.04
+    outputs:
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Publishing version
+        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        id: changesets
+        with:
+          title: "Prepare release ${{ github.ref_name }}"
+          commit: "Release ${{ github.ref_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  sandbox:
+    name: Deploy and release to sandbox
+    needs: prepare
+    if: needs.prepare.outputs.hasChangesets == 'false'
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy to sandbox
+        run: 'echo it works'
+      - name: Clean up
+        run: npm run release:cleanup ${{ github.ref_name }}
+      - name: Prepare clean up pull request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          base: main
+          branch: "cleanup-changesets-${{ github.ref_name }}"
+          title: Cleanup against ${{ github.ref_name }}
