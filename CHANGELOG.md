@@ -1,5 +1,11 @@
 # test-changesets
 
+## 3.16.8
+
+### Patch Changes
+
+- bba6a13: test7
+
 ## 3.16.7
 
 ### Patch Changes
