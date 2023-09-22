@@ -1,5 +1,11 @@
 # test-changesets
 
+## 3.16.2
+
+### Patch Changes
+
+- 396c003: test3
+
 ## 3.16.1
 
 ### Patch Changes
