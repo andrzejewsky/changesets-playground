@@ -46,13 +46,17 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-      - name: Create version
-        run: |
-          echo "CURRENT_VERSION=$(cat package.json | jq .version | xargs)" >> $GITHUB_ENV
-          echo "TEST=123" >> $GITHUB_ENV
       - name: Deploy to sandbox
         run: |
-          cat <<< '{ "version": "${{ env.CURRENT_VERSION }} ${{ env.TEST }}" }'
+          version=$(cat package.json | jq .version | xargs)
+          cat <<< jq --null-input --arg version $version '{
+            "event_type": "open-release-pull-request",
+            "client_payload": {
+              "project": "DASHBOARD",
+              "environment": "SANDBOX",
+              "version": $version
+            }
+          }'
       - name: Prepare clean up pull request
         uses: peter-evans/create-pull-request@v5
         with:
