@@ -1,5 +1,12 @@
 # test-changesets
 
+## 3.16.0
+
+### Patch Changes
+
+- b30fd8b: test
+- e3be524: test
+
 ## 0.2.4
 
 ### Patch Changes
