@@ -1,5 +1,14 @@
 # test-changesets
 
+## 3.16.5
+
+### Patch Changes
+
+- 938276a: test5
+- cc9c3d6: test2
+- b661781: test4
+- 4c5a386: test3
+
 ## 3.16.4
 
 ### Patch Changes
