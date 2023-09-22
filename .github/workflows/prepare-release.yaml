@@ -49,14 +49,15 @@ jobs:
       - name: Deploy to sandbox
         run: |
           version=$(cat package.json | jq .version | xargs)
-          cat <<< jq --null-input --arg version $version '{
+          payload=$(jq --null-input --arg version $version '{
             "event_type": "open-release-pull-request",
             "client_payload": {
               "project": "DASHBOARD",
               "environment": "SANDBOX",
               "version": $version
             }
-          }'
+          }')
+          cat <<< $payload
       - name: Prepare clean up pull request
         uses: peter-evans/create-pull-request@v5
         with:
