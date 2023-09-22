@@ -1,5 +1,11 @@
 # test-changesets
 
+## 3.16.6
+
+### Patch Changes
+
+- fa096b6: test6
+
 ## 3.16.5
 
 ### Patch Changes
