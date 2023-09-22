@@ -50,7 +50,7 @@ jobs:
         run: |
           CURRENT_VERSION=$(cat package.json | jq .version | xargs)
           echo "it works"
-          cat <<< '{ "version": "${CURRENT_VERSION}" }'
+          cat <<< '{ "version": "${{ env.CURRENT_VERSION }}" }'
       - name: Clean up
         run: npm run release:cleanup ${{ github.ref_name }}
       - name: Prepare clean up pull request
