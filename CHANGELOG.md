@@ -1,5 +1,11 @@
 # test-changesets
 
+## 3.16.1
+
+### Patch Changes
+
+- cd011d1: test2
+
 ## 3.16.0
 
 ### Patch Changes
