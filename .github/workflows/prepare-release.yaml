@@ -44,6 +44,8 @@ jobs:
     if: needs.prepare.outputs.hasChangesets == 'false'
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
       - name: Deploy to sandbox
         run: |
           CURRENT_VERSION=$(cat package.json | jq .version | xargs)
