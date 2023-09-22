@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Deploy to sandbox
         run: |
-          CURRENT_VERSION=$(cat package.json | jq .version | xargs)
+          echo "CURRENT_VERSION=$(cat package.json | jq .version | xargs)" >> $GITHUB_ENV
           echo "it works"
           cat <<< '{ "version": "${{ env.CURRENT_VERSION }}" }'
       - name: Clean up
