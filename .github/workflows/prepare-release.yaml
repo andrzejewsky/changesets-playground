@@ -46,13 +46,13 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
-      - name: Deploy to sandbox
+      - name: Create version
         run: |
           echo "CURRENT_VERSION=$(cat package.json | jq .version | xargs)" >> $GITHUB_ENV
-          echo "it works"
-          cat <<< '{ "version": "${{ env.CURRENT_VERSION }}" }'
-      - name: Clean up
-        run: npm run release:cleanup ${{ github.ref_name }}
+          echo "TEST=123" >> $GITHUB_ENV
+      - name: Deploy to sandbox
+        run: |
+          cat <<< '{ "version": "${{ env.CURRENT_VERSION }} ${{ env.TEST }}" }'
       - name: Prepare clean up pull request
         uses: peter-evans/create-pull-request@v5
         with:
