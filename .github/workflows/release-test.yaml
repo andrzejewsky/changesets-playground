@@ -20,6 +20,8 @@ jobs:
       # Pre-releases, alphas, etc. as :snapshot
       - name: Output image tags from git tag events
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           CURRENT_VERSION=$(gh api repos/andrzejewsky/changesets-playground/releases/latest | jq .tag_name | xargs)
           TAG_VERSION=${GITHUB_REF#refs/tags/}
