@@ -24,6 +24,9 @@ jobs:
           CURRENT_VERSION=$(gh api repos/andrzejewsky/changesets-playground/releases/latest | jq .tag_name | xargs)
           TAG_VERSION=${GITHUB_REF#refs/tags/}
 
+          echo "Current: $CURRENT_VERSION"
+          echo "Tag: $TAG_VERSION"
+
           if [ "$CURRENT_VERSION" = "$TAG_VERSION" ]; then
             DASHBOARD_VERSION=latest
           else
