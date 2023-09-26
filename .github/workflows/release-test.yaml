@@ -23,21 +23,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          CURRENT_VERSION=$(gh api repos/andrzejewsky/changesets-playground/releases/latest | jq .tag_name | xargs)
-          TAG_VERSION=${GITHUB_REF#refs/tags/}
+          LATEST_VERSION=$(gh api repos/andrzejewsky/changesets-playground/releases/latest | jq -r .tag_name)
+          CURRENT_TAG=${GITHUB_REF#refs/tags/}
 
-          if [ "$CURRENT_VERSION" = "$TAG_VERSION" ]; then
-            DASHBOARD_VERSION=latest
+          if [ "$LATEST_VERSION" = "$CURRENT_TAG" ]; then
+            TAGS=repo:${CURRENT_TAG},repo:latest
           else
-            DASHBOARD_VERSION=$TAG_VERSION
+            TAGS=repo:${CURRENT_TAG}
           fi
 
           echo "
-          DASHBOARD_VERSION=${DASHBOARD_VERSION}
-          CONTAINER_TAGS=${{ steps.image.outputs.image_name }}:${DASHBOARD_VERSION}
+          DASHBOARD_VERSION=${CURRENT_TAG}
+          CONTAINER_TAGS=${TAGS}
           " >> "${GITHUB_ENV}"
 
       - name: Output test
         run: |
-          echo "event: ${{ toJson(github.event) }}"
           echo "Tags: ${{ env.CONTAINER_TAGS }}"
