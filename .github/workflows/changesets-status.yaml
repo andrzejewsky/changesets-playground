@@ -26,5 +26,5 @@ jobs:
           npm ci
       - name: Check changesets status
         run: |
-          git fetch orign main
+          git fetch origin main
           npm run change:status
