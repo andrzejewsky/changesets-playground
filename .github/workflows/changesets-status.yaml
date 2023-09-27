@@ -26,4 +26,4 @@ jobs:
       - name: Install deps
         run: npm ci
       - name: Check changesets status
-        run: npm run change:status
+        run: npm run change:status -- --since origin/main
