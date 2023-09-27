@@ -11,4 +11,6 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Check changesets status
-        run: npx changeset status --since origin/main
+        run: |
+          npx -v
+          npx changeset status --since origin/main
