@@ -24,9 +24,6 @@ jobs:
             ${{ runner.os }}-qa-
             ${{ runner.os }}-
       - name: Install deps
-        run: |
-          npm ci
+        run: npm ci
       - name: Check changesets status
-        run: |
-          git fetch origin main
-          npm run change:status -- --since origin/main
+        run: npm run change:status
