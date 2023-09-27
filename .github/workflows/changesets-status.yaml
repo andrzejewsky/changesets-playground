@@ -27,4 +27,4 @@ jobs:
       - name: Check changesets status
         run: |
           git fetch origin main
-          npm run change:status -- --since main
+          npm run change:status -- --since origin/main
