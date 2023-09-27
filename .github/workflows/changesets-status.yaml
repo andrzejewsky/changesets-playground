@@ -13,4 +13,4 @@ jobs:
       - name: Check changesets status
         run: |
           npx -v
-          npx changeset status --since origin/main
+          npx @changesets/cli status --since origin/main
