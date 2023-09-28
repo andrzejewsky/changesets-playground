@@ -17,6 +17,7 @@ jobs:
           labels='${{ toJSON(github.event.pull_request.labels.*.name) }}'
           release_label=$(jq '.[] | select(contains("release:"))' <<< $labels)
           version=$(sed "s/release://g" <<< $release_label)
+
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
