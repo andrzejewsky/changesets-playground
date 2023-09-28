@@ -18,6 +18,7 @@ jobs:
           release_label=$labels | jq '.[] | select(contains("release:"))'
           version=$release_label | sed "s/release://g"
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
+
           echo "out: $labels, $release_label, $version"
       # - name: Checkout
       #   uses: actions/checkout@v2
