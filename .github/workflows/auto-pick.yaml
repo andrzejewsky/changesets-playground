@@ -15,8 +15,8 @@ jobs:
       - name: Obtain release
         run: |
           labels=${{ toJSON(github.event.pull_request.labels.*.name) }}
-          release_label=$labels | jq '.[] | select(contains("release:"))'
-          version=$release_label | sed "s/release://g"
+          release_label=$(jq '.[] | select(contains("release:"))' <<< "$labels")
+          version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
 
           echo "out: $labels, $release_label, $version"
