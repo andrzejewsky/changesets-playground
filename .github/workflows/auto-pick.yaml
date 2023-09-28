@@ -18,17 +18,13 @@ jobs:
           release_label=$(jq '.[] | select(contains("release:"))' <<< $labels)
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
-
-          echo "out: $labels, $release_label, $version"
-      # - name: Checkout
-      #   uses: actions/checkout@v2
-      #   with:
-      #     fetch-depth: 0
-      # - name: Cherry pick into release-v1.0
-      #   uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
-      #   with:
-      #     branch: release-v1.0
-      #     labels: |
-      #       cherry-pick
-      #     reviewers: |
-      #       aReviewerUser
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cherry pick into ${{ env.TARGET_VERSION }}
+        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+        with:
+          branch: ${{ env.TARGET_VERSION }}
+          labels: cherry-pick
+          # reviewers: aReviewerUser
