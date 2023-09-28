@@ -1,0 +1,33 @@
+name: Release sync
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: ["closed"]
+
+jobs:
+  cherry_pick:
+    runs-on: ubuntu-latest
+    name: Cherry pick into release branch
+    if: ${{ startsWith(github.event.pull_request.labels.*.name, 'release:') && github.event.pull_request.merged == true }}
+    steps:
+      - name: Obtain release
+        run: |
+          labels=${{ toJSON(github.event.pull_request.labels.*.name) }}
+          release_label=$labels | jq '.[] | select(contains("release:"))'
+          version=$release_label | sed "s/release://g"
+          echo "TARGET_VERSION=$version" >> $GITHUB_ENV
+          echo "out: $labels, $release_label, $version"
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+      #   with:
+      #     fetch-depth: 0
+      # - name: Cherry pick into release-v1.0
+      #   uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
+      #   with:
+      #     branch: release-v1.0
+      #     labels: |
+      #       cherry-pick
+      #     reviewers: |
+      #       aReviewerUser
