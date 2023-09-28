@@ -10,7 +10,7 @@ jobs:
   cherry_pick:
     runs-on: ubuntu-latest
     name: Cherry pick into release branch
-    if: ${{ startsWith(github.event.pull_request.labels.*.name, 'release:') && github.event.pull_request.merged == true }}
+    if: ${{ github.event.pull_request.merged == true }}
     steps:
       - name: Obtain release
         run: |
