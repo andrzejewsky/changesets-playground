@@ -6,8 +6,10 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - id: files
+        name: Get changed files
         uses: jitterbit/get-changed-files@v1
-      - run: |
+      - name: Changeset file lookup  
+        run: |
           for changed_file in ${{ steps.files.outputs.added_modified }}; do
             echo "Do something with this ${changed_file}."
           done
