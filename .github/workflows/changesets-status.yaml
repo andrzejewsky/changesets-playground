@@ -9,5 +9,5 @@ jobs:
         uses: jitterbit/get-changed-files@v1
       - run: |
           for added_file in ${{ steps.files.outputs.added_modified }}; do
-            has_file=$(echo "${added_file}" | grep "\.changeset\/.*\.md")
+            echo "${added_file} | grep "\.changeset\/.*\.md"
           done
