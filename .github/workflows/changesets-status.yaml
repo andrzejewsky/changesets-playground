@@ -8,6 +8,9 @@ jobs:
       - id: files
         uses: jitterbit/get-changed-files@v1
       - run: |
+          has_file=false
           for added_file in ${{ steps.files.outputs.added_modified }}; do
-            echo "file: ${added_file}."
+            has_file=$(echo "${added_file} | grep "\.changeset\/.*\.md")
           done
+
+          echo "has file: $has_file"
