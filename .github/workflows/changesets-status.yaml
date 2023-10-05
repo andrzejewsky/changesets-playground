@@ -8,6 +8,8 @@ jobs:
       - id: files
         name: Get changed files
         uses: jitterbit/get-changed-files@v1
+        with:
+          format: csv
       - name: Changeset file lookup  
         run: |
           echo "${{ steps.files.outputs.added_modified }}"
