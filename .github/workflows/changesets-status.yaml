@@ -12,7 +12,6 @@ jobs:
           format: csv
       - name: Changeset file lookup  
         run: |
-          echo "${{ steps.files.outputs.added_modified }}"
-          for changed_file in ${{ steps.files.outputs.added_modified }}; do
-            echo "Do something with this ${changed_file}."
-          done
+          echo "${{ steps.files.outputs.added_modified }}" | grep "\.changeset\/.*.md"
+          HAS=$(echo "${{ steps.files.outputs.added_modified }}" | grep "\.changeset\/.*.md")
+          
