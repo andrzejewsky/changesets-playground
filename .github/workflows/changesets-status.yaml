@@ -15,7 +15,7 @@ jobs:
       - name: Changeset file lookup       
         run: |
           pr_branch="${{steps.extract_branch.outputs.branch }}"
-          files=$(gh pr diff $pr_branch --name-only)
+          files=$(gh pr diff $pr_branch --name-only | | tr '\n' ',')
           echo "files: $files"
           if [[ files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
