@@ -16,11 +16,11 @@ jobs:
         run: |
           pr_branch="${{steps.extract_branch.outputs.branch }}"
           files=$(gh pr diff $pr_branch --name-only)
-          echo "files: $files"
-          # if [[ "${{ steps.files.outputs.added_modified }}" =~ \.changeset\/.*.md ]]; then
-          #   echo "Changesets found!"
-          # else
-          #   echo "There is no changeset file in your pull request."
-          #   exit 1
-          # fi
+  
+          if [[ files =~ \.changeset\/.*.md ]]; then
+            echo "Changesets found!"
+          else
+            echo "There is no changeset file in your pull request."
+            exit 1
+          fi
           
