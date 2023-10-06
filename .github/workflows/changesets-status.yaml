@@ -5,17 +5,14 @@ jobs:
   deploy:
     runs-on: ubuntu-22.04
     steps:
-      - id: files
-        name: Get changed files
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: csv
-      - name: Changeset file lookup  
+      - name: Changeset file lookup 
         run: |
-          if [[ "${{ steps.files.outputs.added_modified }}" =~ \.changeset\/.*.md ]]; then
-            echo "Changesets found!"
-          else
-            echo "There is no changeset file in your pull request."
-            exit 1
-          fi
+          names=$(gh pr diff --name-only)
+          echo "files: $names"
+          # if [[ "${{ steps.files.outputs.added_modified }}" =~ \.changeset\/.*.md ]]; then
+          #   echo "Changesets found!"
+          # else
+          #   echo "There is no changeset file in your pull request."
+          #   exit 1
+          # fi
           
