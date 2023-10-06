@@ -7,12 +7,12 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      # - name: Checkout Repo
-      #   uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
 
       - name: Changeset file lookup       
         run: |
-          pr_branch="${{ github.ref }}"
+          pr_branch="status-diff"
           echo "branch: $pr_branch"
           names=$(gh pr diff $pr_branch --name-only)
           echo "files: $names"
