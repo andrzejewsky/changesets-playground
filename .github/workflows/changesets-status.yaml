@@ -12,7 +12,9 @@ jobs:
 
       - name: Changeset file lookup       
         run: |
-          names=$(gh pr diff --name-only)
+          pr_branch="${{ github.ref_name }}"
+          echo "branch: $pr_branch"
+          names=$(gh pr diff $pr_branch --name-only)
           echo "files: $names"
           # if [[ "${{ steps.files.outputs.added_modified }}" =~ \.changeset\/.*.md ]]; then
           #   echo "Changesets found!"
