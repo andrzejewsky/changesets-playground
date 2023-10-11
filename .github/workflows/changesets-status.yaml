@@ -4,18 +4,18 @@ on: [pull_request]
 jobs:
   deploy:
     runs-on: ubuntu-22.04
-    env:
-      GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
       - name: Extract branch name
         id: extract_branch
         run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
-      - name: Changeset file lookup       
+      - name: Changeset file lookup   
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_BRANCH: ${{ steps.extract_branch.outputs.branch }}    
         run: |
-          pr_branch="${{steps.extract_branch.outputs.branch }}"
-          files=$(gh pr diff $pr_branch --name-only)
+          files=$(gh pr diff $PR_BRANCH --name-only)
           if [[ $files =~ \.changeset\/.*.md ]]; then
             echo "Changesets found!"
           else
