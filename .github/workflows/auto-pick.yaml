@@ -32,7 +32,6 @@ jobs:
           
           git remote update
           git fetch --all
-          git fetch origin "$TARGET_VERSION"
           git checkout -b "$PR_BRANCH" "$ORIGIN_BRANCH"
           git cherry-pick "$MERGE_COMMIT"
           git push -u origin "$PR_BRANCH"
