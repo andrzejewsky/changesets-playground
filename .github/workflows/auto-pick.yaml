@@ -1,10 +1,10 @@
-name: Release sync
+name: Check pick
 
 on:
   pull_request:
     branches:
       - main
-    types: ["closed"]
+    types: ["closed", "labeled"]
 
 jobs:
   cherry_pick:
@@ -23,8 +23,22 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cherry pick into ${{ env.TARGET_VERSION }}
-        uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
-        with:
-          branch: ${{ env.TARGET_VERSION }}
-          labels: cherry-pick
-          # reviewers: aReviewerUser
+        env:
+          PR_BRANCH: pick-${{ github.event.pull_request.head.ref }}-${{ env.TARGET_VERSION }}
+          ORIGIN_BRANCH: origin/${{ env.TARGET_VERSION }}
+          MERGE_COMMIT: ${{ github.event.pull_request.merge_commit_sha }}
+        run: |
+          echo $PR_BRANCH
+          echo $ORIGIN_BRANCH
+          echo $MERGE_COMMIT
+          echo ${{ env.TARGET_VERSION }}
+          echo $TARGET_VERSION
+
+
+          # git config --global user.name "github-actions[bot]"
+          # git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # git fetch origin ${{ env.TARGET_VERSION }}
+          # git checkout $PR_BRANCH $ORIGIN_BRANCH
+          # git cherry-pick $MERGE_COMMIT
+          # git push origin ${{ env.TARGET_VERSION }}
