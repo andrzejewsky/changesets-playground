@@ -19,7 +19,6 @@ jobs:
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
-        id: checkout
         if: env.TARGET_VERSION != ''
         uses: actions/checkout@v4
         with:
