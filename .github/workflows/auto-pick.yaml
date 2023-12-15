@@ -37,7 +37,17 @@ jobs:
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH" "$ORIGIN_BRANCH"
-          git cherry-pick -m 1 --strategy=recursive --strategy-option=theirs "$GITHUB_SHA"
+          git cherry-pick \
+            -m 1 \
+            --strategy=recursive \
+            --strategy-option=theirs \
+            "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
 
-          gh pr create --title "$PULL_REQUEST_TITLE" --body "Pick #$PULL_REQUEST_NUMBER" --base "$TARGET_VERSION" --head "$PR_BRANCH" --label "cherry-pick" --assignee "$PULL_REQUEST_AUTHOR"
+          gh pr create \
+            --title "$PULL_REQUEST_TITLE" \
+            --body "Pick #$PULL_REQUEST_NUMBER" \
+            --base "$TARGET_VERSION" \
+            --head "$PR_BRANCH" \
+            --label "cherry-pick" \
+            --assignee "$PULL_REQUEST_AUTHOR"
