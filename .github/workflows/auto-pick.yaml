@@ -24,7 +24,7 @@ jobs:
         env:
           PR_BRANCH: pick-${{ github.event.pull_request.head.ref }}-${{ env.TARGET_VERSION }}
           ORIGIN_BRANCH: origin/${{ env.TARGET_VERSION }}
-          MERGE_COMMIT: ${{ github.event.pull_request.merge_commit_sha }}
+          MERGE_COMMIT: ${{ GITHUB_SHA }}
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           git config --global user.name "github-actions[bot]"
