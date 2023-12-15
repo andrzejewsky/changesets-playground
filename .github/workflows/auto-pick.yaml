@@ -38,7 +38,7 @@ jobs:
           git cherry-pick -m 1 --strategy=recursive --strategy-option=theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
 
-          gh pr create
+          gh pr create \
             --title "Pick #$PULL_REQUEST_NUMBER" \
             --body "Pick #$PULL_REQUEST_NUMBER" \ 
             --base $TARGET_VERSION \
