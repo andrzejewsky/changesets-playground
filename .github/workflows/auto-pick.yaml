@@ -4,13 +4,12 @@ on:
   pull_request:
     branches:
       - main
-    types: ["closed", "labeled"]
+    types: ["opened", "labeled"]
 
 jobs:
   cherry_pick:
     runs-on: ubuntu-latest
     name: Cherry pick into release branch
-    # if: ${{ github.event.pull_request.merged == true }}
     steps:
       - name: Obtain release
         run: |
