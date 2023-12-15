@@ -24,6 +24,7 @@ jobs:
           fetch-depth: 0
       - name: Cherry pick into ${{ env.TARGET_VERSION }}
         env:
+          GH_TOKEN: ${{ github.token }}
           PR_BRANCH: pick-${{ github.event.pull_request.head.ref }}-${{ env.TARGET_VERSION }}
           ORIGIN_BRANCH: origin/${{ env.TARGET_VERSION }}
           PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
