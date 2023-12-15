@@ -10,7 +10,7 @@ jobs:
   cherry_pick:
     runs-on: ubuntu-latest
     name: Cherry pick into release branch
-    if: ${{ github.event.pull_request.merged == true }}
+    # if: ${{ github.event.pull_request.merged == true }}
     steps:
       - name: Obtain release
         run: |
@@ -19,6 +19,8 @@ jobs:
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
+        id: checkout
+        if: TARGET_VERSION != ''
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
