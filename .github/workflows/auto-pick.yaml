@@ -19,7 +19,7 @@ jobs:
           version=$(sed "s/release://g" <<< $release_label)
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Cherry pick into ${{ env.TARGET_VERSION }}
@@ -46,7 +46,7 @@ jobs:
 
           gh pr create \
             --title "$PULL_REQUEST_TITLE" \
-            --body "Pick #$PULL_REQUEST_NUMBER" \
+            --body "Pick: #$PULL_REQUEST_NUMBER" \
             --base "$TARGET_VERSION" \
             --head "$PR_BRANCH" \
             --label "cherry-pick" \
