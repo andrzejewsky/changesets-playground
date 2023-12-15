@@ -20,6 +20,8 @@ jobs:
           echo "TARGET_VERSION=$version" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Cherry pick into ${{ env.TARGET_VERSION }}
         env:
           PR_BRANCH: pick-${{ github.event.pull_request.head.ref }}-${{ env.TARGET_VERSION }}
@@ -32,7 +34,7 @@ jobs:
           git remote update
           git fetch --all
           git checkout -b "$PR_BRANCH" "$ORIGIN_BRANCH"
-          git cherry-pick "$GITHUB_SHA"
+          git cherry-pick -m 1 --strategy=recursive --strategy-option=theirs "$GITHUB_SHA"
           git push -u origin "$PR_BRANCH"
 
           gh pr create
