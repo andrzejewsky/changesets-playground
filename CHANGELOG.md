@@ -1,5 +1,22 @@
 # test-changesets
 
+## 3.16.0
+
+### Patch Changes
+
+- 938276a: test5
+- 2f2f679: workflow
+- cc9c3d6: test2
+- fa096b6: test6
+- b30fd8b: test
+- bba6a13: test7
+- 20117df: test
+- f0f35d9: test
+- b661781: test4
+- 4c5a386: test3
+- e3be524: test
+- a97c847: test6
+
 ## 0.2.4
 
 ### Patch Changes
