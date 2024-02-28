@@ -1,0 +1,38 @@
+name: Run test manually
+
+on: [workflow_dispatch]
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  initialize-cloud:
+    runs-on: ubuntu-22.04
+    outputs:
+      BASE_URL: ${{ steps.cloud_variables.outputs.BASE_URL }}
+      API_URL: ${{ steps.cloud_variables.outputs.API_URL }}
+      BACKUP_ID: ${{ steps.cloud_variables.outputs.BACKUP_ID }}
+      BACKUP_VER: ${{ steps.cloud_variables.outputs.BACKUP_VER }}
+      BACKUP_NAME: ${{ steps.cloud_variables.outputs.BACKUP_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./.github/actions
+    
+      - name: Set variables mode
+        id: set_variables_mode
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == "refs/heads/main" ]]; then
+            echo "MODE=main" >> $GITHUB_OUTPUT
+          else
+            echo "MODE=release" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate variables
+        id: cloud_variables
+        uses: ./.github/actions/prepare-tests-variables
+        with:
+          CLI_TOKEN: token
+          MODE: ${{ steps.set_variables_mode.outputs.MODE }}
