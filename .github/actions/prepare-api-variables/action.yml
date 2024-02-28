@@ -49,9 +49,10 @@ runs:
         fi
 
         if [[ "$MODE" == 'release' ]]; then
+          CURRENT_BRANCH=$(echo "${GITHUB_REF}" | sed "s/refs\/heads\///")
           VERSION_SLUG=$(echo "${GITHUB_REF_SLUG}" | sed "s/\.//")
           echo "RELEASE CALLED: $VERSION_SLUG"
-          echo "GITHUB_REF_SLUG: $GITHUB_REF_SLUG"
+          echo "GITHUB_REF_SLUG: $GITHUB_REF"
           echo "BASE_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/dashboard/" >> $GITHUB_OUTPUT
           echo "API_URL=https://v${VERSION_SLUG}.staging.saleor.cloud/graphql/" >> $GITHUB_OUTPUT
           echo "BASE_URL_DOMAIN=v${VERSION_SLUG}.staging.saleor.cloud" >> $GITHUB_OUTPUT
